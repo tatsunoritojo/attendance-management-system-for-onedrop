@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出席管理システム v3.2 取扱説明書</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Meiryo', 'Yu Gothic', 'Hiragino Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .version {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .search-box {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            width: 300px;
+            font-size: 14px;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background-color: #f0f0f0;
+        }
+        
+        main {
+            padding: 3rem 0;
+        }
+        
+        .section {
+            background: white;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .section h3 {
+            color: #495057;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+        
+        .section h4 {
+            color: #6c757d;
+            font-size: 1.1rem;
+            margin: 1rem 0 0.5rem 0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .warning::before {
+            content: "⚠️ ";
+            font-weight: bold;
+        }
+        
+        .tip {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .tip::before {
+            content: "💡 ";
+            font-weight: bold;
+        }
+        
+        ol, ul {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin: 0.5rem 0;
+        }
+        
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+            position: relative;
+        }
+        
+        .step-list li::before {
+            content: "手順 " counter(step-counter);
+            font-weight: bold;
+            color: #28a745;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .screenshot-placeholder {
+            width: 100%;
+            height: 200px;
+            background: #e9ecef;
+            border: 2px dashed #adb5bd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0;
+            border-radius: 8px;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .toc {
+            background: #e9ecef;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .toc h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        
+        .toc ul {
+            list-style: none;
+            padding-left: 1rem;
+        }
+        
+        .toc a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 500;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* プリント用スタイル */
+        @media print {
+            nav, footer {
+                display: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>出席管理システム</h1>
+            <div class="version">取扱説明書 v3.2</div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <input type="text" class="search-box" placeholder="マニュアル内を検索..." id="searchBox">
+                <ul class="nav-links">
+                    <li><a href="#overview">概要</a></li>
+                    <li><a href="#setup">初期設定</a></li>
+                    <li><a href="#daily">日常業務</a></li>
+                    <li><a href="#monthly">月次業務</a></li>
+                    <li><a href="#troubleshooting">トラブル対応</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <!-- 目次 -->
+            <div class="toc">
+                <h3>📋 目次</h3>
+                <ul>
+                    <li><a href="#overview">1. はじめに</a></li>
+                    <li><a href="#setup">2. 初期設定</a></li>
+                    <li><a href="#daily">3. 日常業務の操作</a></li>
+                    <li><a href="#monthly">4. 月次業務の操作</a></li>
+                    <li><a href="#troubleshooting">5. トラブルシューティング</a></li>
+                    <li><a href="#maintenance">6. メンテナンス</a></li>
+                    <li><a href="#appendix">7. 付録</a></li>
+                </ul>
+            </div>
+
+            <!-- 1. はじめに -->
+            <section class="section" id="overview">
+                <h2>1. はじめに</h2>
+                
+                <h3>1.1 システム概要</h3>
+                <p>出席管理システム v3.2は、塾の出席管理とレポート作成を効率化するアプリケーションです。QRコードスキャンによる出席記録から、Excel形式での月次レポート作成まで、一連の業務をサポートします。</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>📱 出席管理機能</h4>
+                        <p>QRコードスキャンまたは手動入力により、生徒の出席を記録します。Google Sheetsと自動連携し、リアルタイムでデータを更新します。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🖨️ QRコード印刷機能</h4>
+                        <p>Brother P-touchプリンターと連携し、生徒用QRコードラベルを効率的に印刷できます。</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📊 Excel月次レポート生成</h4>
+                        <p>月次の出席データを基に、個別生徒シート付きのExcelレポートを自動生成します。講師コメント記入欄も含まれます。</p>
+                    </div>
+                </div>
+
+                <h3>1.2 本マニュアルの使い方</h3>
+                <div class="tip">
+                    <strong>検索機能を活用してください</strong><br>
+                    上部の検索ボックスでキーワード検索が可能です。「QRコード」「エラー」「コメント」など、知りたい内容のキーワードを入力してください。
+                </div>
+                
+                <h4>主要なキーボードショートカット</h4>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>⌨️ 画面遷移</h4>
+                        <ul>
+                            <li><strong>Alt + P</strong>：QRコード印刷画面</li>
+                            <li><strong>Alt + R</strong>：レポート生成画面</li>
+                            <li><strong>Alt + S</strong>：設定画面</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <ul>
+                    <li><strong>日常業務</strong>：毎日の出席記録とQRコード印刷</li>
+                    <li><strong>月次業務</strong>：月末のレポート生成と講師コメント記入</li>
+                    <li><strong>トラブル対応</strong>：問題発生時の解決策</li>
+                </ul>
+            </section>
+
+            <!-- 2. 初期設定 -->
+            <section class="section" id="setup">
+                <h2>2. 初期設定</h2>
+                
+                <h3>2.1 システム要件</h3>
+                <ul>
+                    <li>Windows 10/11</li>
+                    <li>Brother P-touch Editor 5.4</li>
+                    <li>Brother QL-800プリンター</li>
+                    <li>インターネット接続（Google API使用のため）</li>
+                </ul>
+
+                <h3>2.2 Google API設定</h3>
+                <div class="warning">
+                    初回設定時のみ必要な作業です。システム管理者にご相談ください。設定変更が必要な場合は、メイン画面でAlt+Sキーを押して設定画面にアクセスできます。
+                </div>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>service_account.jsonファイルの配置</strong><br>
+                        Google APIの認証情報ファイルをアプリケーションフォルダに配置します。
+                        <div class="screenshot-placeholder">スクリーンショット: service_account.jsonファイルの配置場所</div>
+                    </li>
+                    <li>
+                        <strong>settings.jsonファイルの確認</strong><br>
+                        Google SheetsのIDやフォルダIDが正しく設定されていることを確認します。
+                        <div class="screenshot-placeholder">スクリーンショット: settings.json設定内容</div>
+                    </li>
+                </ol>
+
+                <h3>2.3 プリンター設定</h3>
+                <ol class="step-list">
+                    <li>
+                        <strong>Brother QL-800の接続確認</strong><br>
+                        プリンターがUSBケーブルでPCに接続され、電源が入っていることを確認します。
+                    </li>
+                    <li>
+                        <strong>P-touch Editorのインストール確認</strong><br>
+                        Brother P-touch Editor 5.4がインストールされていることを確認します。
+                    </li>
+                </ol>
+            </section>
+
+            <!-- 3. 日常業務の操作 -->
+            <section class="section" id="daily">
+                <h2>3. 日常業務の操作</h2>
+                
+                <h3>3.1 出席管理機能</h3>
+                
+                <h4>QRスキャンによる出席記録</h4>
+                <ol class="step-list">
+                    <li>
+                        <strong>アプリケーション起動</strong><br>
+                        デスクトップの「出席管理システム」アイコンをダブルクリックして起動します。
+                        <div class="screenshot-placeholder">スクリーンショット: アプリケーション起動画面</div>
+                    </li>
+                    <li>
+                        <strong>QRコードスキャン</strong><br>
+                        生徒が持参したQRコードをカメラでスキャンします。
+                        <div class="screenshot-placeholder">スクリーンショット: QRスキャン画面</div>
+                    </li>
+                    <li>
+                        <strong>出席確認</strong><br>
+                        スキャン完了後、生徒情報が表示され、出席が記録されます。
+                    </li>
+                </ol>
+
+                <div class="tip">
+                    QRコードが読み取れない場合は、手動入力機能を使用してください。
+                </div>
+
+                <h4>手動入力による出席記録</h4>
+                <ol class="step-list">
+                    <li>
+                        <strong>手動入力ボタンをクリック</strong><br>
+                        QRスキャン画面の「手動入力」ボタンをクリックします。
+                    </li>
+                    <li>
+                        <strong>生徒ID入力</strong><br>
+                        生徒IDを入力し、「確認」ボタンをクリックします。
+                        <div class="screenshot-placeholder">スクリーンショット: 手動入力画面</div>
+                    </li>
+                    <li>
+                        <strong>出席記録完了</strong><br>
+                        生徒情報が表示され、出席が記録されます。
+                    </li>
+                </ol>
+
+                <h3>3.2 QRコード印刷機能</h3>
+                
+                <h4>生徒リストの更新</h4>
+                <ol class="step-list">
+                    <li>
+                        <strong>印刷画面への移動</strong><br>
+                        メイン画面でAlt+Pキーを押して印刷画面に移動します。
+                        <div class="screenshot-placeholder">スクリーンショット: メイン画面からAlt+Pでの画面遷移</div>
+                    </li>
+                    <li>
+                        <strong>リスト更新実行</strong><br>
+                        「リスト更新」ボタンをクリックして、Google Sheetsから最新の生徒リストを取得します。
+                        <div class="screenshot-placeholder">スクリーンショット: リスト更新ボタン</div>
+                    </li>
+                </ol>
+
+                <h4>QRコード印刷実行</h4>
+                <ol class="step-list">
+                    <li>
+                        <strong>生徒選択</strong><br>
+                        印刷したい生徒をリストから選択します。
+                    </li>
+                    <li>
+                        <strong>印刷実行</strong><br>
+                        「このQRコードを印刷」ボタンをクリックし、P-touch Editorで印刷を実行します。
+                        <div class="screenshot-placeholder">スクリーンショット: 印刷実行画面</div>
+                    </li>
+                </ol>
+            </section>
+
+            <!-- 4. 月次業務の操作 -->
+            <section class="section" id="monthly">
+                <h2>4. 月次業務の操作</h2>
+                
+                <div class="highlight">
+                    <strong>📅 月次業務の流れ</strong><br>
+                    月初：前月レポート生成 → 月中：データ確認・修正 → 月末：講師コメント記入 → 翌月初：保護者配布・アーカイブ
+                </div>
+
+                <h3>4.1 Excel月次レポート生成</h3>
+                
+                <h4>レポート生成画面の使い方</h4>
+                <ol class="step-list">
+                    <li>
+                        <strong>レポート画面への移動</strong><br>
+                        メイン画面でAlt+Rキーを押してレポート画面に移動します。
+                        <div class="screenshot-placeholder">スクリーンショット: メイン画面からレポート画面への遷移</div>
+                    </li>
+                    <li>
+                        <strong>対象月の選択</strong><br>
+                        年月選択ドロップダウンから、レポートを生成したい月を選択します。
+                        <div class="screenshot-placeholder">スクリーンショット: 年月選択画面</div>
+                    </li>
+                    <li>
+                        <strong>対象生徒の選択</strong><br>
+                        「全生徒」または「特定の生徒」を選択します。特定生徒の場合は、対象生徒をリストから選択します。
+                    </li>
+                </ol>
+
+                <h4>Excelファイルの出力・保存</h4>
+                <ol class="step-list">
+                    <li>
+                        <strong>Excel生成実行</strong><br>
+                        「Excel生成」ボタンをクリックし、レポート生成を開始します。
+                        <div class="screenshot-placeholder">スクリーンショット: Excel生成ボタン</div>
+                    </li>
+                    <li>
+                        <strong>保存場所の確認</strong><br>
+                        生成されたExcelファイルは、出力フォルダに保存されます。ファイル名は「月次レポート_YYYY年MM月.xlsx」形式です。
+                    </li>
+                </ol>
+
+                <h3>4.2 講師コメント記入業務</h3>
+                
+                <div class="highlight">
+                    <strong>🌟 重要なプロセス</strong><br>
+                    月末に各生徒のレポートに講師が個別コメントを記入することで、保護者との重要なコミュニケーションツールとなります。
+                </div>
+
+                <h4>月末コメント記入フローの概要</h4>
+                <ol class="step-list">
+                    <li>
+                        <strong>Excelファイルを開く</strong><br>
+                        生成された「月次レポート_YYYY年MM月.xlsx」ファイルをExcelで開きます。
+                    </li>
+                    <li>
+                        <strong>生徒別シートの確認</strong><br>
+                        ファイル下部のシートタブから、各生徒のシートを確認できます。
+                        <div class="screenshot-placeholder">スクリーンショット: 生徒別シートタブ</div>
+                    </li>
+                    <li>
+                        <strong>コメント記入開始</strong><br>
+                        各生徒シートのコメント欄に、月次の振り返りと励ましのコメントを記入します。
+                    </li>
+                </ol>
+
+                <h4>Excelファイルのコメント欄の場所</h4>
+                <div class="tip">
+                    コメント欄は各生徒シートの下部にあります。「講師コメント」と表示されたセル範囲に記入してください。
+                </div>
+                
+                <ul>
+                    <li><strong>講師コメント欄</strong>：自由記述形式（200文字程度推奨）</li>
+                    <li><strong>プランニング</strong>：プルダウンリストから選択（○/空白）</li>
+                    <li><strong>カウンセリング</strong>：プルダウンリストから選択（○/空白）</li>
+                    <li><strong>個別対応</strong>：プルダウンリストから選択（○/空白）</li>
+                </ul>
+                
+                <div class="screenshot-placeholder">スクリーンショット: コメント記入エリアの詳細</div>
+
+                <h4>効果的なコメント記入のガイドライン</h4>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>👍 良いコメントの例</h4>
+                        <ul>
+                            <li>具体的な成長ポイントを記載</li>
+                            <li>前向きな励ましの言葉を含める</li>
+                            <li>次月への具体的な目標を提示</li>
+                            <li>保護者向けの情報を含める</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📝 コメント例文</h4>
+                        <p>「今月は数学の基礎問題の正答率が向上しました。特に方程式の解き方が安定してきています。来月は応用問題にも挑戦していきましょう。」</p>
+                    </div>
+                </div>
+
+                <h4>プルダウンリスト活用の基準</h4>
+                <ul>
+                    <li><strong>プランニング（○）</strong>：学習計画の相談・見直しを実施した場合</li>
+                    <li><strong>カウンセリング（○）</strong>：学習面・生活面での個別相談を実施した場合</li>
+                    <li><strong>個別対応（○）</strong>：通常授業以外の特別指導を実施した場合</li>
+                </ul>
+
+                <h4>複数生徒のコメント記入効率化のコツ</h4>
+                <div class="tip">
+                    Excelの「シート間移動」機能を活用し、Ctrl+PageUpやCtrl+PageDownで効率的にシート間を移動できます。
+                </div>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>コメントテンプレートの活用</strong><br>
+                        よく使用するコメントパターンをメモ帳等に準備しておき、適宜カスタマイズして使用します。
+                    </li>
+                    <li>
+                        <strong>段階的な記入</strong><br>
+                        全生徒の基本情報確認 → プルダウンリスト選択 → コメント記入の順で進めると効率的です。
+                    </li>
+                    <li>
+                        <strong>定期的な保存</strong><br>
+                        5-10名程度記入したら、こまめにファイルを保存しましょう。
+                    </li>
+                </ol>
+
+                <h4>コメント記入完了後の保存・共有手順</h4>
+                <ol class="step-list">
+                    <li>
+                        <strong>最終確認</strong><br>
+                        全生徒のコメント記入漏れがないか、誤字脱字がないかを確認します。
+                    </li>
+                    <li>
+                        <strong>ファイル保存</strong><br>
+                        「名前を付けて保存」で「月次レポート_YYYY年MM月_完成版.xlsx」として保存します。
+                    </li>
+                    <li>
+                        <strong>バックアップ作成</strong><br>
+                        重要なファイルのため、別フォルダにもコピーを保存することを推奨します。
+                    </li>
+                </ol>
+
+                <h3>4.3 月次レポート運用フロー</h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>📅 月初（1-5日）</h4>
+                        <ul>
+                            <li>前月レポート生成</li>
+                            <li>出席データの確認</li>
+                            <li>異常値のチェック</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📊 月中（6-25日）</h4>
+                        <ul>
+                            <li>データ確認・修正</li>
+                            <li>必要に応じて手動修正</li>
+                            <li>コメント準備</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>✍️ 月末（26-末日）</h4>
+                        <ul>
+                            <li>講師コメント記入</li>
+                            <li>プルダウンリスト選択</li>
+                            <li>最終確認・保存</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📤 翌月初（1-3日）</h4>
+                        <ul>
+                            <li>保護者配布</li>
+                            <li>ファイルアーカイブ</li>
+                            <li>次月準備</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. トラブルシューティング -->
+            <section class="section" id="troubleshooting">
+                <h2>5. トラブルシューティング</h2>
+                
+                <h3>5.1 日常業務でのトラブル</h3>
+                
+                <h4>出席データ同期エラー</h4>
+                <div class="warning">
+                    「Google Sheetsに接続できません」というエラーが表示される場合
+                </div>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>インターネット接続確認</strong><br>
+                        PCがインターネットに接続されているか確認します。
+                    </li>
+                    <li>
+                        <strong>Google API認証確認</strong><br>
+                        service_account.jsonファイルが正しく配置されているか確認します。
+                    </li>
+                    <li>
+                        <strong>手動でGoogle Sheetsを確認</strong><br>
+                        ブラウザで直接Google Sheetsにアクセスし、データが正常に表示されるか確認します。
+                    </li>
+                </ol>
+
+                <div class="tip">
+                    <strong>緊急時の対応</strong><br>
+                    システムが使用できない場合は、紙ベースで出席を記録し、後でGoogle Sheetsに手動入力してください。
+                </div>
+
+                <h4>QRコード印刷エラー</h4>
+                <div class="warning">
+                    「プリンターに接続できません」というエラーが表示される場合
+                </div>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>プリンター接続確認</strong><br>
+                        Brother QL-800がUSBケーブルで接続され、電源が入っているか確認します。
+                    </li>
+                    <li>
+                        <strong>P-touch Editor起動確認</strong><br>
+                        P-touch Editorが正常に起動するか確認します。
+                    </li>
+                    <li>
+                        <strong>プリンタードライバー再インストール</strong><br>
+                        必要に応じてプリンタードライバーを再インストールします。
+                    </li>
+                </ol>
+
+                <h3>5.2 月次業務でのトラブル</h3>
+                
+                <h4>Excel生成エラー</h4>
+                <div class="warning">
+                    「レポート生成に失敗しました」というエラーが表示される場合
+                </div>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>出力フォルダの確認</strong><br>
+                        出力フォルダに書き込み権限があるか、容量に余裕があるか確認します。
+                    </li>
+                    <li>
+                        <strong>テンプレートファイルの確認</strong><br>
+                        reports_template.xlsxファイルが存在し、破損していないか確認します。
+                    </li>
+                    <li>
+                        <strong>データの確認</strong><br>
+                        対象月のデータがGoogle Sheetsに正しく記録されているか確認します。
+                    </li>
+                </ol>
+
+                <h4>コメント記入時のExcel不具合</h4>
+                <div class="warning">
+                    Excelファイルが開けない、保存できない場合
+                </div>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>Excelアプリケーションの再起動</strong><br>
+                        Excelを一度終了し、再度起動してファイルを開きます。
+                    </li>
+                    <li>
+                        <strong>別のファイル名で保存</strong><br>
+                        「名前を付けて保存」で別の名前で保存を試行します。
+                    </li>
+                    <li>
+                        <strong>バックアップファイルの利用</strong><br>
+                        元のファイルが破損している場合は、バックアップファイルを使用します。
+                    </li>
+                </ol>
+
+                <h3>5.3 手動処理が必要な場合</h3>
+                
+                <h4>塾生の入塾処理失敗時のGoogle Sheets手動入力</h4>
+                <div class="highlight">
+                    <strong>🔧 緊急時対応</strong><br>
+                    システムで入塾処理ができない場合は、Google Sheetsに直接データを入力します。
+                </div>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>Google Sheetsにアクセス</strong><br>
+                        ブラウザでGoogle Sheetsの「生徒情報」シートを開きます。
+                        <div class="screenshot-placeholder">スクリーンショット: Google Sheets生徒情報画面</div>
+                    </li>
+                    <li>
+                        <strong>新規行の追加</strong><br>
+                        最下行に新しい生徒の情報を入力します：
+                        <ul>
+                            <li>生徒ID（例：2025070001）</li>
+                            <li>氏名</li>
+                            <li>学年</li>
+                            <li>入塾日</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <strong>保存確認</strong><br>
+                        入力後、データが正しく保存されていることを確認します。
+                    </li>
+                </ol>
+
+                <h4>出席データの手動修正方法</h4>
+                <ol class="step-list">
+                    <li>
+                        <strong>出席記録シートを開く</strong><br>
+                        Google Sheetsの「出席記録」シートを開きます。
+                    </li>
+                    <li>
+                        <strong>該当データの検索</strong><br>
+                        修正が必要な日付・生徒のデータを検索します。
+                    </li>
+                    <li>
+                        <strong>データ修正</strong><br>
+                        出席時間、退室時間、その他の情報を直接修正します。
+                    </li>
+                </ol>
+
+                <h4>Excelテンプレートの手動修正</h4>
+                <div class="warning">
+                    テンプレートファイルを修正する場合は、必ず元ファイルのバックアップを作成してください。
+                </div>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>バックアップ作成</strong><br>
+                        reports_template.xlsxファイルをコピーして、バックアップを作成します。
+                    </li>
+                    <li>
+                        <strong>テンプレート修正</strong><br>
+                        Excelでテンプレートファイルを開き、必要な修正を行います。
+                    </li>
+                    <li>
+                        <strong>動作確認</strong><br>
+                        修正後、レポート生成機能が正常に動作するか確認します。
+                    </li>
+                </ol>
+            </section>
+
+            <!-- 6. メンテナンス -->
+            <section class="section" id="maintenance">
+                <h2>6. メンテナンス</h2>
+                
+                <h3>6.1 データバックアップ</h3>
+                <div class="tip">
+                    重要なデータを守るため、定期的なバックアップを実施してください。
+                </div>
+                
+                <h4>週次バックアップ（推奨）</h4>
+                <ul>
+                    <li>Google Sheetsデータのエクスポート</li>
+                    <li>生成済みExcelレポートのコピー</li>
+                    <li>設定ファイル（settings.json）のコピー</li>
+                </ul>
+
+                <h4>月次バックアップ（必須）</h4>
+                <ul>
+                    <li>完成した月次レポートのアーカイブ</li>
+                    <li>システム設定全体のバックアップ</li>
+                    <li>QRコード画像ファイルのバックアップ</li>
+                </ul>
+
+                <h3>6.2 システム更新</h3>
+                <div class="warning">
+                    システム更新前は必ずデータのバックアップを作成してください。
+                </div>
+                
+                <ol class="step-list">
+                    <li>
+                        <strong>更新通知の確認</strong><br>
+                        システム管理者から更新の案内があった場合は、指示に従って更新を実施します。
+                    </li>
+                    <li>
+                        <strong>バックアップ作成</strong><br>
+                        現在のデータとファイルをすべてバックアップします。
+                    </li>
+                    <li>
+                        <strong>更新実行</strong><br>
+                        提供された新しいファイルで上書き更新を実行します。
+                    </li>
+                    <li>
+                        <strong>動作確認</strong><br>
+                        更新後、すべての機能が正常に動作することを確認します。
+                    </li>
+                </ol>
+
+                <h3>6.3 定期確認項目</h3>
+                
+                <h4>日次確認項目</h4>
+                <ul>
+                    <li>出席データのGoogle Sheets同期確認</li>
+                    <li>プリンターの動作確認</li>
+                    <li>システムエラーログの確認</li>
+                </ul>
+
+                <h4>週次確認項目</h4>
+                <ul>
+                    <li>データバックアップの実行</li>
+                    <li>出席データの整合性確認</li>
+                    <li>システムの動作速度確認</li>
+                </ul>
+
+                <h4>月次確認項目</h4>
+                <ul>
+                    <li>月次レポート生成の確認</li>
+                    <li>システム全体のバックアップ</li>
+                    <li>不要ファイルの清理</li>
+                    <li>システムログの整理</li>
+                </ul>
+            </section>
+
+            <!-- 7. 付録 -->
+            <section class="section" id="appendix">
+                <h2>7. 付録</h2>
+                
+                <h3>7.1 Google Sheets連携詳細</h3>
+                <h4>使用しているシート</h4>
+                <ul>
+                    <li><strong>生徒情報</strong>：生徒の基本情報（ID、氏名、学年等）</li>
+                    <li><strong>出席記録</strong>：日々の出席・退室時刻</li>
+                    <li><strong>QRコード情報</strong>：QRコード印刷用データ</li>
+                </ul>
+
+                <h3>7.2 Excelテンプレート仕様</h3>
+                <h4>reports_template.xlsx構造</h4>
+                <ul>
+                    <li><strong>基本レイアウト</strong>：A4横向き、印刷マージン設定済み</li>
+                    <li><strong>ヘッダー部</strong>：塾名、レポート期間、生徒情報</li>
+                    <li><strong>データ部</strong>：出席状況、各種統計情報</li>
+                    <li><strong>コメント部</strong>：講師コメント欄、プルダウンリスト</li>
+                </ul>
+
+                <h3>7.3 講師コメント例文集</h3>
+                
+                <h4>成長を褒めるコメント</h4>
+                <ul>
+                    <li>「今月は◯◯の分野で大きな成長が見られました。特に△△の理解が深まり、問題解決のスピードが向上しています。」</li>
+                    <li>「継続的な努力が実を結び、◯◯の成績が安定してきました。この調子で頑張り続けましょう。」</li>
+                </ul>
+
+                <h4>課題を示すコメント</h4>
+                <ul>
+                    <li>「◯◯の分野でまだ理解が不安定な部分があります。来月は基礎から丁寧に復習していきましょう。」</li>
+                    <li>「出席率が少し下がっているのが気になります。規則正しい学習習慣を身につけることを目標にしましょう。」</li>
+                </ul>
+
+                <h4>励ましのコメント</h4>
+                <ul>
+                    <li>「困難な問題にも最後まで諦めずに取り組む姿勢が素晴らしいです。その努力は必ず結果につながります。」</li>
+                    <li>「質問を積極的にしてくれるようになり、学習に対する意欲を感じます。どんどん質問してください。」</li>
+                </ul>
+
+                <h3>7.4 バージョン履歴</h3>
+                
+                <h4>v3.2.0 (2025年7月18日)</h4>
+                <ul>
+                    <li>Excel月次レポート生成機能の追加</li>
+                    <li>講師コメント記入機能の実装</li>
+                    <li>プルダウンリスト機能の追加</li>
+                    <li>A4横向き印刷対応</li>
+                </ul>
+
+                <h4>v3.1.0 (2025年7月17日)</h4>
+                <ul>
+                    <li>Webベースレポートエディタの追加</li>
+                    <li>リアルタイムプレビュー機能</li>
+                    <li>画像管理システムの実装</li>
+                </ul>
+
+                <h4>v3.0.0 (2025年7月1日)</h4>
+                <ul>
+                    <li>UI/UXの大幅改善</li>
+                    <li>Google API連携の安定化</li>
+                    <li>QRコード印刷機能の自動化</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 出席管理システム v3.2 - このマニュアルは運用担当者向けに作成されています</p>
+            <p>質問やサポートが必要な場合は、システム管理者にお問い合わせください</p>
+        </div>
+    </footer>
+
+    <script>
+        // 検索機能の実装
+        document.getElementById('searchBox').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const sections = document.querySelectorAll('.section');
+            
+            sections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(searchTerm) || searchTerm === '') {
+                    section.style.display = 'block';
+                    // 検索語をハイライト
+                    if (searchTerm !== '') {
+                        highlightSearchTerm(section, searchTerm);
+                    } else {
+                        removeHighlight(section);
+                    }
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+
+        // 検索語ハイライト機能
+        function highlightSearchTerm(element, searchTerm) {
+            removeHighlight(element);
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            const textNodes = [];
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+
+            textNodes.forEach(textNode => {
+                const content = textNode.textContent;
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                if (regex.test(content)) {
+                    const highlightedContent = content.replace(regex, '<mark>$1</mark>');
+                    const span = document.createElement('span');
+                    span.innerHTML = highlightedContent;
+                    textNode.parentNode.replaceChild(span, textNode);
+                }
+            });
+        }
+
+        // ハイライト除去機能
+        function removeHighlight(element) {
+            const marks = element.querySelectorAll('mark');
+            marks.forEach(mark => {
+                mark.replaceWith(mark.textContent);
+            });
+        }
+
+        // スムーズスクロール機能
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 印刷機能
+        function printManual() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

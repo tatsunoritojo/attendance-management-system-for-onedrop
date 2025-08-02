@@ -1,0 +1,5 @@
+##デプロイID
+AKfycbxprjTlogVGrl2uhHPdeJfsf6SrXnY29hi42ZpBuhyl-O_Ve49pqhad7gJ9dYo1iPJirA
+
+##アプリURL
+https://script.google.com/macros/s/AKfycbxprjTlogVGrl2uhHPdeJfsf6SrXnY29hi42ZpBuhyl-O_Ve49pqhad7gJ9dYo1iPJirA/exec
