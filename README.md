@@ -365,6 +365,21 @@ python app.py --port 5001
 - **一時ファイル管理**: 適切なファイル管理
 - **エラーハンドリング**: 包括的なエラー処理
 
+## 📚 ドキュメント・引継ぎ資料
+
+### 🚀 開発者向けドキュメント
+- **[CLAUDE.md](CLAUDE.md)**: Claude Code向けプロジェクト情報・クイックスタート
+- **[GIT_WORKFLOW.md](GIT_WORKFLOW.md)**: Git運用ルール・ブランチ戦略・コミット規約
+- **[DEVELOPMENT_SETUP.md](DEVELOPMENT_SETUP.md)**: 開発環境セットアップガイド
+
+### 📋 引継ぎ・運用資料
+- **[引継ぎ資料_v3.2.md](引継ぎ資料_v3.2.md)**: 技術詳細・開発引継ぎ資料
+- **[implementation_handover.md](implementation_handover.md)**: 機能実装要件書
+- **[manual/handover_guide.md](manual/handover_guide.md)**: 運用引継ぎガイド
+
+### 🔧 ユーザー向け資料
+- **[manual/index.html](manual/index.html)**: エンドユーザーマニュアル
+
 ## サポート
 
 ### 動作確認済み環境
