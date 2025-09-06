@@ -25,6 +25,7 @@ from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
+from kivy.uix.image import Image
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import FadeTransition, Screen, ScreenManager
 from kivy.uix.scrollview import ScrollView
@@ -254,14 +255,15 @@ class WaitScreen(Screen):
         # メインコンテンツエリア - カード風デザイン
         layout = BoxLayout(orientation="vertical", padding=60, spacing=30)
         
-        # タイトルラベル - より洗練されたスタイル
-        title_label = Label(
-            text="塾生カードをスキャンしてください",
-            font_name="UDDigiKyokashoN-R" if FONT_AVAILABLE else "Roboto",
-            font_size="28sp",
-            color=(0.2, 0.2, 0.2, 1),  # ダークグレー
+        # Onedropロゴ表示
+        logo_path = Path(__file__).resolve().parent / "assets" / "images" / "Onedrop_logo" / "ChatGPT Image 2025年9月6日 16_41_22.png"
+        title_label = Image(
+            source=str(logo_path),
             size_hint_y=None,
-            height="80dp"
+            height="720dp",
+            allow_stretch=True,
+            keep_ratio=True,
+            mipmap=True
         )
         layout.add_widget(title_label)
         
@@ -270,7 +272,7 @@ class WaitScreen(Screen):
         
         # 入力フィールド背景を白にして視認性向上
         self.input = TextInput(
-            hint_text="ここをタッチしてスキャン開始",
+            hint_text="タッチしてください",
             multiline=False,
             font_name="UDDigiKyokashoN-R" if FONT_AVAILABLE else "Roboto",
             font_size="40sp",
@@ -280,9 +282,10 @@ class WaitScreen(Screen):
             foreground_color=(0.2, 0.2, 0.2, 1),  # ダークグレー文字
             padding=[20, 20]
         )
-        # エンターキーでの送信対応とクリック音を追加
+        # エンターキーでの送信対応
         self.input.bind(on_text_validate=self.on_submit)
-        self.input.bind(on_focus=self.on_input_focus)
+        # タッチイベントをオーバーライド
+        self.input.on_touch_down = self.on_input_touch_down
         input_container.add_widget(self.input)
         
         # 送信ボタン - より目立つデザイン
@@ -335,10 +338,43 @@ class WaitScreen(Screen):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
 
-    def on_input_focus(self, instance, focus):
-        """入力フィールドがフォーカスされた時に音を再生"""
-        if focus and self.sound:
-            self.sound.play()
+    def on_touch_down(self, touch):
+        """画面全体のタッチイベントを処理"""
+        print(f"DEBUG: Screen touched at {touch.pos}")
+        
+        # 入力フィールド以外がタッチされた場合、ヒントテキストを待機状態に戻す
+        if not self.input.collide_point(*touch.pos):
+            print("DEBUG: Touch outside input field - resetting hint text and colors")
+            if self.input.hint_text == "スキャナーに塾生カードをかざしてください":
+                self.input.hint_text = "タッチしてください"
+                # 待機状態の色に戻す（白背景）
+                self.input.background_color = (1, 1, 1, 1)  # 白背景
+                self.input.foreground_color = (0.2, 0.2, 0.2, 1)  # ダークグレー文字
+        
+        # 通常のタッチ処理を継続
+        return super().on_touch_down(touch)
+
+    def on_input_touch_down(self, touch):
+        """入力フィールドがタッチされた時の処理"""
+        print(f"DEBUG: Input field touched at {touch.pos}")
+        
+        # タッチ位置が入力フィールド内かチェック
+        if self.input.collide_point(*touch.pos):
+            print("DEBUG: Touch is inside input field")
+            # ヒントテキストを変更
+            if self.input.hint_text == "タッチしてください":
+                print("DEBUG: Changing hint text to scan message and activating colors")
+                self.input.hint_text = "スキャナーに塾生カードをかざしてください"
+                # アクティブ状態の色に変更（薄い青背景）
+                self.input.background_color = (0.9, 0.95, 1.0, 1)  # 薄い青
+                self.input.foreground_color = (0.1, 0.3, 0.7, 1)  # 濃い青
+                # 音を再生
+                if self.sound:
+                    self.sound.play()
+            
+            # 元のTextInputのtouch処理を実行
+            return TextInput.on_touch_down(self.input, touch)
+        return False
 
     def on_submit(self, *_):
         sid = self.input.text.strip()
@@ -355,6 +391,10 @@ class WaitScreen(Screen):
         threading.Thread(target=self._process_student_id, args=(sid,)).start()
 
         self.input.text = ""
+        # ヒントテキストと色を元に戻す
+        self.input.hint_text = "タッチしてください"
+        self.input.background_color = (1, 1, 1, 1)  # 白背景
+        self.input.foreground_color = (0.2, 0.2, 0.2, 1)  # ダークグレー文字
 
     def _process_student_id(self, sid):
         app = App.get_running_app()
