@@ -202,7 +202,7 @@ class ReportEditorScreen(Screen):
         save_btn = Button(
             text="設定を保存",
             font_name=self.get_font_name(),
-            background_color=(0.2, 0.5, 0.8, 1)
+            background_color=(0.286, 0.796, 0.98, 1)
         )
         save_btn.bind(on_press=self.save_settings)
         button_layout.add_widget(save_btn)

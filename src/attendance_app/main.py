@@ -160,7 +160,7 @@ def show_error_popup(title, message):
         height="50dp",
         font_name="UDDigiKyokashoN-R" if FONT_AVAILABLE else "Roboto",
         font_size="16sp",
-        background_color=(0.4, 0.7, 0.8, 1),  # 柔らかい水色
+        background_color=(0.286, 0.796, 0.98, 1),  # 49cbfa色
         color=(1, 1, 1, 1),  # 白文字
         background_normal=''
     )
@@ -295,7 +295,7 @@ class WaitScreen(Screen):
             font_size="24sp",
             size_hint=(1, None),
             height="80dp",
-            background_color=(0.5, 0.8, 0.6, 1),  # 柔らかい緑系
+            background_color=(0.286, 0.796, 0.98, 1),  # 49cbfa色
             color=(1, 1, 1, 1),  # 白文字
             background_normal=''
         )
@@ -955,7 +955,7 @@ class SettingsScreen(Screen):
             size=("35dp", "35dp"),
             font_name="UDDigiKyokashoN-R" if FONT_AVAILABLE else "Roboto",
             font_size="14sp",
-            background_color=(0.4, 0.7, 0.8, 1),  # 柔らかい水色
+            background_color=(0.286, 0.796, 0.98, 1),  # 49cbfa色
             color=(1, 1, 1, 1),
             background_normal=''
         )
@@ -987,7 +987,7 @@ class SettingsScreen(Screen):
             size=("35dp", "35dp"),
             font_name="UDDigiKyokashoN-R" if FONT_AVAILABLE else "Roboto",
             font_size="14sp",
-            background_color=(0.4, 0.7, 0.8, 1),  # 柔らかい水色
+            background_color=(0.286, 0.796, 0.98, 1),  # 49cbfa色
             color=(1, 1, 1, 1),
             background_normal=''
         )
@@ -1019,7 +1019,7 @@ class SettingsScreen(Screen):
             size=("35dp", "35dp"),
             font_name="UDDigiKyokashoN-R" if FONT_AVAILABLE else "Roboto",
             font_size="14sp",
-            background_color=(0.4, 0.7, 0.8, 1),  # 柔らかい水色
+            background_color=(0.286, 0.796, 0.98, 1),  # 49cbfa色
             color=(1, 1, 1, 1),
             background_normal=''
         )
@@ -1052,7 +1052,7 @@ class SettingsScreen(Screen):
             width=80,
             font_name="UDDigiKyokashoN-R" if FONT_AVAILABLE else "Roboto",
             font_size="12sp",
-            background_color=(0.5, 0.8, 0.6, 1),  # 柔らかい緑色
+            background_color=(0.286, 0.796, 0.98, 1),  # 49cbfa色
             color=(1, 1, 1, 1),
             background_normal=''
         )
@@ -1066,7 +1066,7 @@ class SettingsScreen(Screen):
             width=30,
             font_name="UDDigiKyokashoN-R" if FONT_AVAILABLE else "Roboto",
             font_size="14sp",
-            background_color=(0.4, 0.7, 0.8, 1),  # 柔らかい水色
+            background_color=(0.286, 0.796, 0.98, 1),  # 49cbfa色
             color=(1, 1, 1, 1),
             background_normal=''
         )
@@ -1088,7 +1088,7 @@ class SettingsScreen(Screen):
             text="保存",
             font_name="UDDigiKyokashoN-R" if FONT_AVAILABLE else "Roboto",
             font_size="26sp",
-            background_color=(0.5, 0.8, 0.6, 1),  # 柔らかい緑系
+            background_color=(0.286, 0.796, 0.98, 1),  # 49cbfa色
             color=(1, 1, 1, 1),
             background_normal=''
         )
