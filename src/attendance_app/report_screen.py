@@ -109,7 +109,7 @@ class ReportScreen(Screen):
             font_name=self.get_font_name(),
             size_hint_y=None,
             height="50dp",
-            background_color=(0.84, 0.93, 0.95, 1)
+            background_color=(0.286, 0.796, 0.98, 1)
         )
         back_button.bind(on_press=self.go_back)
         main_layout.add_widget(back_button)
@@ -310,7 +310,7 @@ class ReportScreen(Screen):
             font_name=self.get_font_name(),
             size_hint_y=None,
             height="40dp",
-            background_color=(0.84, 0.93, 0.95, 1)
+            background_color=(0.286, 0.796, 0.98, 1)
         )
         refresh_button.bind(on_press=self.refresh_reports_list)
         section.add_widget(refresh_button)
@@ -382,7 +382,7 @@ class ReportScreen(Screen):
                     text="開く",
                     font_name=self.get_font_name(),
                     size_hint_x=0.125,
-                    background_color=(0.84, 0.93, 0.95, 1)
+                    background_color=(0.286, 0.796, 0.98, 1)
                 )
                 open_btn.bind(on_press=lambda x, path=report['full_path']: self.open_report(path))
                 report_layout.add_widget(open_btn)
@@ -644,7 +644,7 @@ class ReportScreen(Screen):
             font_name=self.get_font_name(),
             size_hint_y=None,
             height="40dp",
-            background_color=(0.84, 0.93, 0.95, 1)
+            background_color=(0.286, 0.796, 0.98, 1)
         )
         content.add_widget(close_btn)
         
@@ -674,7 +674,7 @@ class ReportScreen(Screen):
             font_name=self.get_font_name(),
             size_hint_y=None,
             height="40dp",
-            background_color=(0.84, 0.93, 0.95, 1)
+            background_color=(0.286, 0.796, 0.98, 1)
         )
         content.add_widget(close_btn)
         

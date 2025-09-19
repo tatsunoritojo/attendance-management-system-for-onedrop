@@ -61,7 +61,7 @@ class PrintDialog(Popup):
             text='印刷実行',
             font_name="UDDigiKyokashoN-R" if FONT_AVAILABLE else "Roboto",
             font_size="18sp",
-            background_color=(0.5, 0.8, 0.6, 1),  # 柔らかい緑系
+            background_color=(0.286, 0.796, 0.98, 1),  # 49cbfa色
             color=(1, 1, 1, 1),  # 白文字
             background_normal=''
         )
