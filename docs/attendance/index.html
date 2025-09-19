@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>出席状況 - Onedrop塾</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📚 出席状況 - Onedrop塾</h1>
+            <div class="status-bar">
+                <span class="update-time" id="updateTime">読み込み中...</span>
+                <span class="attendee-count" id="attendeeCount">現在の在席者: 0名</span>
+            </div>
+        </header>
+        
+        <main class="attendance-list" id="attendeeList">
+            <div class="loading">データを読み込んでいます...</div>
+        </main>
+        
+        <footer class="footer">
+            <p>🔄 30秒ごとに自動更新 | 📡 Google Sheets連携</p>
+        </footer>
+    </div>
+    
+    <!-- 設定とスクリプト読み込み -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
